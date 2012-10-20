@@ -11,9 +11,6 @@ class Scheduler
   public:
   Scheduler(Process* aProcessList, byte aProcessCount);
   
-  // Run this in the setup() section to initialize all processes.
-  void initialize();
-  
   void run();
   
   private:

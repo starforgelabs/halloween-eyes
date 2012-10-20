@@ -7,20 +7,13 @@ Scheduler::Scheduler(Process* aProcessList, byte aProcessCount)
   current = -1;
 }
 
-void Scheduler::initialize()
-{
-  for(int i=0; i<count; i++)
-    processes[i].initialize();
-}
-
 void Scheduler::run()
 {
   selectNextProcess();
-//  Serial.print("Current Process ");
-//  Serial.println(current);
   processes[current].execute();
 }
 
+// This is a very simple round robin scheduler
 ProcessIndex Scheduler::selectNextProcess()
 {
   if(current < 0 || count == 1)

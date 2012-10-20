@@ -2,35 +2,31 @@
 #define PROCESS_H
 
 #include "Arduino.h"
+#include "tape_player.h"
+
+class TapePlayer;
 
 class Process
 {
-  public:
-  enum State {psSleeping, psRunning};
+  private:
+  enum State {psSleeping, psRunning, psSuspended};
   typedef unsigned long Time;
 
   public:
-  Process(int aPin) 
-  { 
-    state = psRunning;
-    pin = aPin; 
-  }
-  
-  void execute();
+  Process(); 
   
   // Run once in the setup() section. 
-  // Use this to initialize pin modes, etc.
-  void initialize();
+  void configure(byte aPin, Tape* aCatalogue, byte aCount);
+  void execute();
+  void hibernate(unsigned long aMilliseconds);
   
   private:
   State state;
-  int pin;
   Time wakeTime;
-  bool ledState;
+  TapePlayer player;
   
   private:
   bool tryWaking();
-  void hibernate(unsigned long aMilliseconds);
 };
 
 #endif//PROCESS_H

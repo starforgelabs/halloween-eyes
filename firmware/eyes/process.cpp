@@ -1,14 +1,22 @@
 #include "Arduino.h"
 #include "process.h"
 
+Process::Process()
+{ 
+  state = psSuspended;
+}
+
+void Process::configure(byte aPin, Tape* aCatalogue, byte aCount)
+{
+  player.configure(this, aPin, aCatalogue, aCount); 
+  state = psRunning;
+}
+
 void Process::execute()
 {
   if(!tryWaking()) return;
   
-  ledState = !ledState;
-  digitalWrite(pin, ledState ? HIGH : LOW);
-  
-  hibernate(random(500,2000));
+  player.play();
 }
 
 void Process::hibernate(unsigned long aMilliseconds)
@@ -18,14 +26,10 @@ void Process::hibernate(unsigned long aMilliseconds)
 }
 
   
-void Process::initialize()
-{
-  pinMode(pin, OUTPUT);
-  ledState = false;
-}
-
 bool Process::tryWaking()
 {
+  if(state == psSuspended) return false;
+  
   if(state == psSleeping && millis() >= wakeTime)
     state = psRunning;
         
