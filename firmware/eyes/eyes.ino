@@ -69,9 +69,9 @@ Tape Catalogue[CATALOGUE_COUNT] =
 // Cooperative multitasking system
 //
 ////////////////////////////////////////////////////////////////////////////////
-#define PROCESS_COUNT 8
+#define PROCESS_COUNT 12
 Process processList[PROCESS_COUNT];
-byte processPins[PROCESS_COUNT] = {5,6,7,8,9,10,11,12};
+byte processPins[PROCESS_COUNT] = {2,3,4,5,6,7,8,9,10,11,12,13};
 
 Scheduler::Scheduler scheduler(processList, PROCESS_COUNT);
 
