@@ -1,3 +1,15 @@
+/*
+* Copyright 2012 James Knowles. 
+*
+* This work is licensed under a Creative Commons
+* Attribution-ShareAlike 3.0 Unported License.
+*
+* https://creativecommons.org/licenses/by-sa/3.0/
+*
+* This code is strictly "as is". Use at your own risk.
+*
+*/
+
 #include <SCMProcess.h>
 #include <SCMScheduler.h>
 
@@ -59,10 +71,12 @@ Tape Catalogue[CATALOGUE_COUNT] =
 // Cooperative multitasking system
 //
 ////////////////////////////////////////////////////////////////////////////////
-#define PROCESS_COUNT 9
+#define PROCESS_COUNT 12
 SCMProcess* processList[PROCESS_COUNT] = 
 {
-  new Process(13, Catalogue, CATALOGUE_COUNT), 
+  new Process(2, Catalogue, CATALOGUE_COUNT), 
+  new Process(3, Catalogue, CATALOGUE_COUNT), 
+  new Process(4, Catalogue, CATALOGUE_COUNT), 
   new Process(5, Catalogue, CATALOGUE_COUNT), 
   new Process(6, Catalogue, CATALOGUE_COUNT), 
   new Process(7, Catalogue, CATALOGUE_COUNT), 
@@ -71,6 +85,7 @@ SCMProcess* processList[PROCESS_COUNT] =
   new Process(10, Catalogue, CATALOGUE_COUNT), 
   new Process(11, Catalogue, CATALOGUE_COUNT), 
   new Process(12, Catalogue, CATALOGUE_COUNT)
+  new Process(13, Catalogue, CATALOGUE_COUNT), 
 };
 
 SCMScheduler scheduler(processList, PROCESS_COUNT);
