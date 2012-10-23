@@ -1,38 +1,17 @@
 #include "Arduino.h"
 #include "process.h"
 
-Process::Process()
-{ 
-  state = psSuspended;
-}
-
-void Process::configure(byte aPin, Tape* aCatalogue, byte aCount)
+Process::Process(byte aPin, Tape* aCatalogue, byte aCount)
 {
   player.configure(this, aPin, aCatalogue, aCount); 
-  state = psRunning;
+  resume();
 }
 
-void Process::execute()
+bool Process::execute()
 {
-  if(!tryWaking()) return;
+  if(!SCMProcess::execute()) return false;
   
   player.play();
-}
-
-void Process::hibernate(unsigned long aMilliseconds)
-{
-  wakeTime = millis() + aMilliseconds;
-  state = psSleeping;
-}
-
-  
-bool Process::tryWaking()
-{
-  if(state == psSuspended) return false;
-  
-  if(state == psSleeping && millis() >= wakeTime)
-    state = psRunning;
-        
-  return state == psRunning;
+  return true;
 }
 

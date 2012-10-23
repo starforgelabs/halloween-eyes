@@ -3,16 +3,18 @@
 
 #include "Arduino.h"
 #include "tape.h"
-
-class Process;
+#include <SCMProcess.h>
 
 class TapePlayer
 {
   public:
-  TapePlayer();
+  TapePlayer() : tape(NULL), catalogue(NULL) {}
   
-  void configure(Process* aProcess, byte aPin, Tape* aCatalogue, byte aCount);
+  void configure(SCMProcess* aProcess, byte aPin, Tape* aCatalogue, byte aCount);
+  
   bool play();
+  
+  byte getPin() { return pin; }
 
   private:
   // Reference to the tape catalogue
@@ -24,7 +26,7 @@ class TapePlayer
   byte pc; // program counter
   
   byte pin;
-  Process* process;
+  SCMProcess* process;
 
   private:
   bool chooseNewTape();

@@ -1,11 +1,4 @@
 #include "tape_player.h"
-#include "process.h"
-
-TapePlayer::TapePlayer()
-{
-  catalogue = NULL;
-  tape = NULL;
-}
 
 bool TapePlayer::chooseNewTape()
 {
@@ -19,7 +12,7 @@ bool TapePlayer::chooseNewTape()
   return true;
 }
 
-void TapePlayer::configure(Process* aProcess, byte aPin, Tape* aCatalogue, byte aCount)
+void TapePlayer::configure(SCMProcess* aProcess, byte aPin, Tape* aCatalogue, byte aCount)
 {
   process = aProcess;
   pin = aPin;
@@ -28,8 +21,7 @@ void TapePlayer::configure(Process* aProcess, byte aPin, Tape* aCatalogue, byte 
   
   pinMode(pin, OUTPUT);
   
-  // Initial program is zero
-  setTape(0);
+  tape = NULL;
 }
 
 bool TapePlayer::eot()

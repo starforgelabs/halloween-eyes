@@ -1,5 +1,7 @@
+#include <SCMProcess.h>
+#include <SCMScheduler.h>
+
 #include "process.h"
-#include "scheduler.h"
 #include "tape.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -57,18 +59,25 @@ Tape Catalogue[CATALOGUE_COUNT] =
 // Cooperative multitasking system
 //
 ////////////////////////////////////////////////////////////////////////////////
-#define PROCESS_COUNT 8
-Process processList[PROCESS_COUNT];
-byte processPins[PROCESS_COUNT] = {5,6,7,8,9,10,11,12};
+#define PROCESS_COUNT 9
+SCMProcess* processList[PROCESS_COUNT] = 
+{
+  new Process(13, Catalogue, CATALOGUE_COUNT), 
+  new Process(5, Catalogue, CATALOGUE_COUNT), 
+  new Process(6, Catalogue, CATALOGUE_COUNT), 
+  new Process(7, Catalogue, CATALOGUE_COUNT), 
+  new Process(8, Catalogue, CATALOGUE_COUNT), 
+  new Process(9, Catalogue, CATALOGUE_COUNT), 
+  new Process(10, Catalogue, CATALOGUE_COUNT), 
+  new Process(11, Catalogue, CATALOGUE_COUNT), 
+  new Process(12, Catalogue, CATALOGUE_COUNT)
+};
 
-Scheduler::Scheduler scheduler(processList, PROCESS_COUNT);
+SCMScheduler scheduler(processList, PROCESS_COUNT);
 
 void setup()
 {
   randomSeed(analogRead(0));
-  
-  for(int i=0; i<PROCESS_COUNT; i++)
-    processList[i].configure(processPins[i], Catalogue, CATALOGUE_COUNT);
 }
 
 void loop()
